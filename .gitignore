@@ -1,0 +1,7 @@
+# Directories
+.venv*
+video/*
+
+# Files
+.env
+!video/_place your videos in this dir

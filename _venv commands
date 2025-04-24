@@ -1,0 +1,8 @@
+# lav venv
+python -m venv .venv
+
+# Aktiver venv
+.venv\Scripts\activate.ps1
+
+# Installer alle requirements
+pip install -r requirements.txt
