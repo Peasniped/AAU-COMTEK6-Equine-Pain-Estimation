@@ -1,3 +1,11 @@
+# Installer venv
+pip install virtualenv
+
+# Enable remoteSigned PowerShell-scripts:
+- I en admin PowerShell-terminal
+set-ExecutionPolicy RemoteSigned
+- Tryk Yes
+
 # lav venv
 python -m venv .venv
 
