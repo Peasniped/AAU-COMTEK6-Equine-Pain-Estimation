@@ -1,15 +1,18 @@
 import cv2
 import numpy as np
+from  YOLO_inference import detect_horse_features, model
 
-def extract_frames(video_path):
+def extract_frames(video_path) -> list[np.ndarray]:
     cap = cv2.VideoCapture(video_path)
     frames = []
+
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
             break
         frames.append(frame)
     cap.release()
+    
     return frames
 
 def detect_head_and_ears(frame):
@@ -23,7 +26,7 @@ def get_points_from_bbox(bbox):
     x, y, w, h = bbox
     return np.array([[x + w//2, y + h//2]], dtype=np.float32)
 
-def track_and_visualize(frames, initial_positions, movement_threshold=4.3, box_thickness:int = 1):
+def track_and_visualize(frames, initial_positions, movement_threshold=0.3, box_thickness:int = 1):
     lk_params = dict(winSize=(15, 15), maxLevel=2,
                      criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
 
@@ -39,16 +42,20 @@ def track_and_visualize(frames, initial_positions, movement_threshold=4.3, box_t
         for idx, (old, new) in enumerate(zip(points, next_points)):
             dx, dy = new[0] - old[0]
             movement = np.sqrt(dx**2 + dy**2)
-            color = (0, 255, 0) if movement < movement_threshold else (0, 0, 255)
 
             # Get current point and original box size
             cx, cy = int(new[0][0]), int(new[0][1])
             box_w, box_h = box_sizes[idx]
             top_left = (cx - box_w // 2, cy - box_h // 2)
             bottom_right = (cx + box_w // 2, cy + box_h // 2)
+
+            movement_threshold_pixels = box_h + box_w / 2 * movement_threshold
+            color = (0, 255, 0) if movement < movement_threshold_pixels else (0, 0, 255)
             cv2.rectangle(frame, top_left, bottom_right, color, thickness=box_thickness)
 
-            if movement >= movement_threshold:
+            
+
+            if movement >= movement_threshold_pixels:
                 text = f"Ear {idx+1} rotation detected!"
                 cv2.putText(frame, text, (cx + 10, cy), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
                 print(f"Frame {i}: {text} (Movement: {movement:.2f})")
@@ -67,7 +74,15 @@ def main(video_path):
     print("Extracting frames...")
     frames = extract_frames(video_path)
     print("Detecting ears in the first frame...")
-    initial_positions = detect_head_and_ears(frames[0])
+    _, detected_objects = detect_horse_features(model, frames[0], show=True)
+    ear_detections = [obj for obj in detected_objects if obj["label"] == "mouth"]
+        
+    print(detected_objects)
+    print(ear_detections)
+
+    exit()
+
+    #initial_positions = detect_head_and_ears(frames[0])
     print("Tracking and visualizing ear movement...")
     track_and_visualize(frames, initial_positions)
     print("Done.")
