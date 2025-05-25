@@ -8,7 +8,7 @@ from ultralytics import YOLO
 # Load your best model
 model = YOLO('model\yolo11n_horse_features_best.pt')
 
-def detect_horse_features(model: YOLO, image: str|np.ndarray, show: bool = False) -> tuple:
+def detect_horse_features(model: YOLO, image: str|np.ndarray, show: bool = False, model_confidence: float = 0.8) -> tuple:
     objects = []
 
     if type(image) == str:
@@ -16,18 +16,28 @@ def detect_horse_features(model: YOLO, image: str|np.ndarray, show: bool = False
     elif type(image) == np.ndarray:
         img = image
 
-    results = model(img, imgsz=640, conf=0.1)
+    results = model(img, imgsz=640, conf=model_confidence)
 
     for obj in results:
         for bbox, classs_id, confidence in zip(obj.boxes.xyxy, obj.boxes.cls, obj.boxes.conf):
             label = model.names[int(classs_id)]
             if label in ["ear", "eye", "nostril", "head", "mouth"]:
                 x1, y1, x2, y2 = map(int, bbox)
-                cv2.rectangle(img, (x1, y1), (x2, y2), (0,255,0), 2)
-                text = f'{label} {confidence:.2f}'
-                cv2.putText(img, text, (x1, y1-10),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0,255,0), 2)
-                objects.append({"label": label, "bbox": bbox, "conficence": confidence})
+                if show:
+                    cv2.rectangle(img, (x1, y1), (x2, y2), (0,255,0), 2)
+                    text = f'{label} {confidence:.2f}'
+                    cv2.putText(img, text, (x1, y1-10),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0,255,0), 2)
+                
+                bbox_list  = bbox.cpu().tolist()
+                bbox_x = int(bbox_list[0])
+                bbox_y = int(bbox_list[1])
+                bbox_w = int(bbox_list[2] - bbox_list[0])
+                bbox_h = int(bbox_list[3] - bbox_list[1])
+                bbox_tuple = (bbox_x, bbox_y, bbox_w, bbox_h)
+                conf_float = confidence.item()
+                
+                objects.append({"label": label, "bbox": bbox_tuple, "conficence": conf_float})
     
     if show:
         cv2.imshow(f'Detections on image', img)
