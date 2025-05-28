@@ -42,8 +42,11 @@ def maintenance_inference(
         if closest_obj is not None and min_dist < max_update_dist:
             new_bbox = closest_obj['bbox'] if isinstance(closest_obj, dict) else closest_obj.bbox
             move_distance = np.linalg.norm(get_center_from_bbox(new_bbox) - feature_center)
+            
+
             feature.bbox = list(new_bbox)
-            feature.update_point(get_center_from_bbox(new_bbox).reshape(1, 2))
+            center = get_center_from_bbox(new_bbox).reshape(-1)
+            feature.update_point(center)
             updated_count += 1
 
             unused_objects.remove(closest_obj)
@@ -52,9 +55,6 @@ def maintenance_inference(
             feature.was_reset = move_distance > big_move_threshold
         else:
             feature.was_reset = False  # Or remove/reset attribute
-
-    log.info(f"[Maintenance Inference] Ran detection on frame {frame_i}: {updated_count}/{len(features)} features updated.")
-
 
 def find_best_starting_frame(frames: list, model_confidence=0.5, attempts: int = 50, show: bool = False) -> tuple[int, object]:
     best_frame  = {"frame_index": 0, "confidence_sum": 0, "detected_objects": None}

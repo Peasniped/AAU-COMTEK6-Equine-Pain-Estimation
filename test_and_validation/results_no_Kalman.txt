@@ -1,0 +1,131 @@
+Video: S1_Video
+  Correct events: 4 of 7 (57.1%)
+  Near misses (almost correct): 1
+  False negatives: 2
+  False positives: 14
+  Avg timing deviation (frames): 7.38
+  -------------------------
+  Precision: 0.222
+  Recall: 0.571
+  F1 Score: 0.32
+
+Video: S2_Video
+  Correct events: 8 of 10 (80.0%)
+  Near misses (almost correct): 1
+  False negatives: 1
+  False positives: 8
+  Avg timing deviation (frames): 5.69
+  -------------------------
+  Precision: 0.5
+  Recall: 0.8
+  F1 Score: 0.615
+
+Video: S3_Video
+  Correct events: 6 of 17 (35.3%)
+  Near misses (almost correct): 2
+  False negatives: 9
+  False positives: 3
+  Avg timing deviation (frames): 12.50
+  -------------------------
+  Precision: 0.667
+  Recall: 0.353
+  F1 Score: 0.462
+
+Video: S4_Video
+  Correct events: 19 of 24 (79.2%)
+  Near misses (almost correct): 4
+  False negatives: 1
+  False positives: 7
+  Avg timing deviation (frames): 13.45
+  -------------------------
+  Precision: 0.731
+  Recall: 0.792
+  F1 Score: 0.76
+
+Video: S5_Video
+  Correct events: 12 of 14 (85.7%)
+  Near misses (almost correct): 2
+  False negatives: 0
+  False positives: 7
+  Avg timing deviation (frames): 12.75
+  -------------------------
+  Precision: 0.632
+  Recall: 0.857
+  F1 Score: 0.728
+
+Video: S6_Video
+  Correct events: 6 of 9 (66.7%)
+  Near misses (almost correct): 0
+  False negatives: 3
+  False positives: 0
+  Avg timing deviation (frames): 6.58
+  -------------------------
+  Precision: 1.0
+  Recall: 0.667
+  F1 Score: 0.8
+
+Video: S7_Video
+  Correct events: 0 of 0 (100.0%)
+  Near misses (almost correct): 0
+  False negatives: 0
+  False positives: 0
+  Avg timing deviation (frames): 0
+  -------------------------
+  Precision: 1.0
+  Recall: 1.0
+  F1 Score: 1.0
+
+Video: S8_Video
+  Correct events: 11 of 16 (68.8%)
+  Near misses (almost correct): 1
+  False negatives: 4
+  False positives: 6
+  Avg timing deviation (frames): 6.14
+  -------------------------
+  Precision: 0.647
+  Recall: 0.688
+  F1 Score: 0.667
+
+Video: S9_Video
+  Correct events: 7 of 13 (53.8%)
+  Near misses (almost correct): 0
+  False negatives: 6
+  False positives: 5
+  Avg timing deviation (frames): 58.07
+  -------------------------
+  Precision: 0.583
+  Recall: 0.538
+  F1 Score: 0.56
+
+Video: S10_Video
+  Correct events: 10 of 10 (100.0%)
+  Near misses (almost correct): 0
+  False negatives: 0
+  False positives: 0
+  Avg timing deviation (frames): 3.45
+  -------------------------
+  Precision: 1.0
+  Recall: 1.0
+  F1 Score: 1.0
+
+Video: S11_Video
+  Correct events: 7 of 13 (53.8%)
+  Near misses (almost correct): 0
+  False negatives: 6
+  False positives: 11
+  Avg timing deviation (frames): 8.43
+  -------------------------
+  Precision: 0.389
+  Recall: 0.538
+  F1 Score: 0.452
+
+Video: S12_Video
+  Correct events: 5 of 7 (71.4%)
+  Near misses (almost correct): 0
+  False negatives: 2
+  False positives: 2
+  Avg timing deviation (frames): 2.00
+  -------------------------
+  Precision: 0.714
+  Recall: 0.714
+  F1 Score: 0.714

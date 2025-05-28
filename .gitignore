@@ -1,7 +1,10 @@
 # Directories
-.venv*
-video/*
 python/__pycache__
+
+# Files in directories
+.venv*
+logs/*
+video/*
 
 # Files
 .env

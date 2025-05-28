@@ -1,15 +1,16 @@
 import  cv2
+import  logging
 import  numpy as np
 
 from _utility   import get_center_from_bbox
+
+log = logging.getLogger(__name__)
 
 lk_params = dict(
     winSize=(31, 31),
     maxLevel=3,
     criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03)
 )
-
-
 
 class Feature:
     def __init__(self, bbox, label):
