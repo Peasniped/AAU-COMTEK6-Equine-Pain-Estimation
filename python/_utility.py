@@ -80,9 +80,10 @@ def visualize_frame(
         cv2.putText(image, f"{frame_i} of {len(frames)}", (5, text_height + 5 + displacement), cv2.FONT_HERSHEY_SIMPLEX, 1, (30, 255, 30), 2)
 
 
-    for feature in features:
+    for _, feature in features.items():
         # Draw the current point
-        x, y = int(feature.point[0]), int(feature.point[1])
+        point = feature.point[0]
+        x, y = int(point[0]), int(point[1])
         color = (30, 235, 30) if feature.label == "ear" else (30, 30, 235)
         cv2.circle(image, (x, y), 4, color, -1)
         

@@ -40,7 +40,7 @@ class Tracker:
         self.prev_gray = None
 
     def get_points_array(self):
-        points = np.array([f.point for f in self.features], dtype=np.float32)
+        points = np.array([f.point for _, f in self.features.items()], dtype=np.float32)
         return points.reshape(-1, 1, 2)
 
     def track_frame(self, frame):
@@ -53,7 +53,7 @@ class Tracker:
         next_points, status, _ = cv2.calcOpticalFlowPyrLK(self.prev_gray, gray, points, None, **lk_params)
 
         motion_list = []
-        for feature, old_pt, new_pt, _status in zip(self.features, points, next_points, status):
+        for feature, old_pt, new_pt, _status in zip(self.features.values(), points, next_points, status):
             feature.update_point(new_pt)
             from_xy = tuple(old_pt[0])
             to_xy = tuple(new_pt[0])

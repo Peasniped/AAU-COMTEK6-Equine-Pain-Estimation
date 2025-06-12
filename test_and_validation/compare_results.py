@@ -180,5 +180,5 @@ def compare_to_equifacs(my_csv_name: str) -> None:
     print_summary(results)
 
 if __name__ == "__main__":
-    csv_name = "results_2025-05-27_01.csv"
+    csv_name = "results_2025-05-25_01.csv"
     compare_to_equifacs(csv_name)

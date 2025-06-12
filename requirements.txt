@@ -1,10 +1,11 @@
 # Enable CUDA
---index-url https://download.pytorch.org/whl/cu118
+--extra-index-url https://download.pytorch.org/whl/cu118
 torch==2.7.0+cu118
 torchaudio==2.7.0+cu118
 torchvision==0.22.0+cu118
 
 dotenv==0.9.9
+lap==0.5.12
 matplotlib==3.10.1
 numpy==2.1.1
 opencv-python==4.11.0.86

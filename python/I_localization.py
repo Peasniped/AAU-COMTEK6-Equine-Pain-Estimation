@@ -19,7 +19,7 @@ def maintenance_inference(
     updated_count = 0
     unused_objects = list(new_objects)
 
-    for feature in features:
+    for feature in features.values():
         feature_class = feature.label.split("_")[1] if "_" in feature.label else feature.label
 
         candidates = [obj for obj in unused_objects if (obj['label'] if isinstance(obj, dict) else obj.label) == feature_class]
@@ -58,7 +58,7 @@ def maintenance_inference(
 
 def find_best_starting_frame(frames: list, model_confidence=0.5, attempts: int = 50, show: bool = False) -> tuple[int, object]:
     best_frame  = {"frame_index": 0, "confidence_sum": 0, "detected_objects": None}
-    features    = []
+    features    = {}
     
     log.info("Finding the best starting frame")
     for frame_index in range(attempts):
@@ -81,10 +81,10 @@ def find_best_starting_frame(frames: list, model_confidence=0.5, attempts: int =
 
     for i, feature in enumerate(best_frame["detected_objects"]):
         #if feature["label"] in ["head", "ear"]:
-            features.append(Feature(feature["bbox"], f"{i}_{feature['label']}"))
+            features[i] = Feature(feature["bbox"], f"{i}_{feature['label']}")
 
-    ears  = len([feature for feature in features if "ear"  in feature.label])
-    heads = len([feature for feature in features if "head" in feature.label])
+    ears  = len([feature for _, feature in features.items() if "ear"  in feature.label])
+    heads = len([feature for _, feature in features.items() if "head" in feature.label])
 
     if ears == 0 or heads == 0:
         raise Exception(f"Head and ears not found in {attempts} attempts. Exiting")

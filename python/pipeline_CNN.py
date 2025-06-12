@@ -4,7 +4,7 @@ import  numpy as np
 import  time
 
 from    I_localization      import find_best_starting_frame, maintenance_inference
-from    II_tracking         import Tracker
+from    II_tracking_CNN     import Tracker
 import  III_motion_analysis
 import  IV_motion_mapping
 from    _utility            import setup_root_logger, extract_frames, visualize_frame, get_head_centers_from_motions, export_labelled_segments, _get_csv_filename
@@ -18,18 +18,14 @@ def start(video_path: str, show: bool = True, export_csv: bool = False, csv_path
     labeled_segments = []
     
     # I
-    starting_frame_i, features = find_best_starting_frame(frames, attempts=50)
+    starting_frame_i = 0
     
     # II
-    tracker = Tracker(features)
+    tracker = Tracker()
     segmenter = III_motion_analysis.MotionSegmenter()
 
     for frame_i, frame in enumerate(frames[starting_frame_i:], starting_frame_i):
-        #log.debug(f"Now processing frame {frame_i} of {frames}")
-        if frame_i % 50 == 0:
-            maintenance_inference(frame, tracker.features, frame_i=frame_i)
-
-        motions = tracker.track_frame(frame)
+        motions = tracker.track_frame(frame, frame_i)
         head_from, head_to = get_head_centers_from_motions(motions)
         segmenter.last_head_to = head_to
 
