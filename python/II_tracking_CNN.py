@@ -29,7 +29,7 @@ class Feature:
             self.trail.pop(0)
 
 class Tracker:
-    def __init__(self, features=None, conf=0.3, iou=0.5):
+    def __init__(self, features=None, conf=0.4, iou=0.5):
         """
         features parameter is ignored (kept for drop-in compatibility).
         """
